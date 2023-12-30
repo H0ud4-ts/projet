@@ -1,30 +1,16 @@
-# projet
-projet système d'exploitation
+### Réponses aux questions sur le code de multiplication de matrices avec des threads en C :
 
-On veut effectuer en parallèle(En utilisant le modèle producteurs/consommateur) le produit de deux matrices: 
-B (n1* m1)  et C (n2 * m2) ⇒ la matrice résultante A=B*C ;
+#### Q1: Quelles sont les structures de données à utiliser ?
+Le code utilise principalement les structures de données suivantes :
+- `DonneesThread`: Une structure de données définie pour stocker les indices de lignes et de colonnes, ainsi que la donnée résultante pour la multiplication de matrices.
 
-Les matrices sont remplis par des valeurs aléatoires
+#### Q2: Comment allez-vous protéger l'accès à ces données ?
+Pour protéger l'accès aux données partagées entre les threads, le code utilise des sémaphores :
+- `mutex`: Un sémaphore utilisé pour protéger les sections critiques du code, assurant un accès exclusif aux ressources partagées.
+- `plein` et `vide`: Ces sémaphores sont utilisés pour synchroniser les producteurs et les consommateurs afin de garantir la cohérence de la lecture et de l'écriture dans le tampon (buffer).
 
-Les résultats intermédiaires seront placés dans un tampon de taille “T[N]”.
-
-Chaque threads producteurs calcule une ligne de la matrice résultante A et range les résultat dans le tampon T
-
-Les threads consommateurs consomment l'élément T[y]  le place dans la matrice résultante A  au bon emplacement!
-
-q1: Quelles sont les structures de données à utiliser ?
-
-q2: Comment allez-vous protéger l'accès à ces données?
-
-q3- quels sont les risques?
-
-1-Cloner le projet github : projet  ; et le modifier le selon les exigences ci-dessus
-
-2- Pour chaque nouvelle idée créer une nouvelle branche; les autres étudiants peuvent améliorer l'idée en créant une nouvelle branche!
-
-3-Les premières réponses sont mieux notées!
-
-4-Bien gérer les éxceptions 
-
-5-Bien gérer les messages d'erreurs!
+#### Q3: Quels sont les risques ?
+Certains risques potentiels :
+- **Conditions de concurrence**: Si les opérations de lecture/écriture dans le tampon ne sont pas correctement synchronisées entre les threads producteurs et consommateurs, cela pourrait entraîner des lectures ou des écritures incorrectes ou inattendues dans le tampon, conduisant à des résultats incorrects.
+- **Blocage** : Une mauvaise utilisation des sémaphores peut entraîner un blocage, où les threads restent bloqués indéfiniment, ce qui peut perturber l'exécution du programme.
 
